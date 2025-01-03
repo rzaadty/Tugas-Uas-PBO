@@ -43,12 +43,14 @@ class Auth extends CI_Controller {
                     redirect('Customer');
                 }
             } else {
-                // Jika login gagal
+                // Jika login gagal, set flashdata dan redirect
                 $this->session->set_flashdata('error', 'Email atau password salah!');
-                redirect('Auth/login');
+                redirect('Auth/login'); // Setelah redirect, flashdata akan hilang
             }
         } else {
+            $this->load->view('Index/header');
             $this->load->view('Auth/login');
+            $this->load->view('Index/footer');
         }
     }
 
