@@ -15,7 +15,7 @@
                     <?php endif; ?>
 
                     <!-- Form action menggunakan site_url('auth/login') -->
-                    <form method="POST" action="<?= site_url('auth/login'); ?>">
+                    <form method="POST" action="<?= site_url('Auth/login'); ?>">
                         <div class="mb-3">
                             <label for="username" class="form-label">Username</label>
                             <input type="text" class="form-control" id="username" name="email" placeholder="Enter Username" required>
@@ -29,7 +29,7 @@
 
                     <!-- Link untuk menuju halaman register jika belum punya akun -->
                     <div class="mt-3 text-center">
-                        <p>Belum punya akun? <a href="<?= site_url('auth/register'); ?>">Daftar Sekarang</a></p>
+                        <p>Belum punya akun? <a href="<?= site_url('Auth/register'); ?>">Daftar Sekarang</a></p>
                     </div>
                 </div>
             </div>

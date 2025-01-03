@@ -17,5 +17,4 @@
 </script>
 <script src="<?php echo base_url('path/dist/assets/static/js/pages/simple-datatables.js'); ?>"></script>
 </body>
-
 </html>
