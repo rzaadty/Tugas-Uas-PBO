@@ -102,7 +102,7 @@
 					</a>
 				</div>
 				<div class="col-6 col-md-3 mb-3 px-2">
-					<a href="#" class="card h-100 text-center border border-dark border-4">
+					<a href="<?= site_url('Meja')?>" class="card h-100 text-center border border-dark border-4">
 						<div class="card-body">
 							<i class="bi bi-table" style="font-size: 40px; color: #000000;"></i>
 							<h5 class="card-title mt-2 text-dark">Meja</h5>
