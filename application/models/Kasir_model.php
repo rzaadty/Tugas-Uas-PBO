@@ -1,7 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-
 class Kasir_model extends CI_Model {
 
     // Fungsi untuk menambah pesanan baru
@@ -14,30 +13,46 @@ class Kasir_model extends CI_Model {
     // Fungsi untuk menambah detail pesanan
     public function tambah_detail_pesanan($data_detail) {
         // Menyimpan detail pesanan ke dalam tabel detail_pesanan
-        $this->db->insert('detail_pesanan', $data_detail);
+        $this->db->insert('pesanan_detail', $data_detail);
     }
 
     // Fungsi untuk mendapatkan semua pesanan
     public function get_all_pesanan() {
-        return $this->db->get('pesanan')->result_array();
+        // Mengambil semua data dari tabel pesanan
+        $query = $this->db->get('pesanan');
+        return $query->result_array();
     }
 
-    // Fungsi untuk mendapatkan detail pesanan berdasarkan id_pesanan
     public function get_detail_pesanan($id_pesanan) {
-        $this->db->where('id_pesanan', $id_pesanan);
-        return $this->db->get('detail_pesanan')->result_array();
+        $this->db->select('
+            pesanan_detail.id_pesanan,
+            pesanan_detail.id_barang,
+            pesanan_detail.jumlah,
+            pesanan_detail.harga_jual,
+            menu.nama_barang,
+            pesanan.uang_bayar,
+            pesanan.kembalian
+        '); // Kolom yang akan diambil
+        $this->db->from('pesanan_detail');
+        $this->db->join('menu', 'menu.id_menu = pesanan_detail.id_barang', 'left'); // Join dengan tabel menu
+        $this->db->join('pesanan', 'pesanan.id_pesanan = pesanan_detail.id_pesanan', 'left'); // Join dengan tabel pesanan
+        $this->db->where('pesanan_detail.id_pesanan', $id_pesanan); // Filter berdasarkan id_pesanan
+        $query = $this->db->get(); // Jalankan query
+        return $query->result_array(); // Kembalikan hasil sebagai array
     }
+    
 
+    // Fungsi untuk mendapatkan semua data meja
     public function get_all_meja() {
-        $query = $this->db->get('meja');  // Mengambil semua data dari tabel meja
-        return $query->result_array();  // Mengembalikan data meja dalam bentuk array
+        // Mengambil semua data dari tabel meja
+        $query = $this->db->get('meja');
+        return $query->result_array();
     }
 
     // Fungsi untuk mengambil semua menu (barang)
     public function get_all_menu() {
-        $query = $this->db->get('menu');  // Mengambil semua data dari tabel barang
-        return $query->result_array();  // Mengembalikan data menu dalam bentuk array
+        // Mengambil semua data dari tabel menu
+        $query = $this->db->get('menu');
+        return $query->result_array();
     }
 }
-
-

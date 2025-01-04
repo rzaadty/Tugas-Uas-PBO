@@ -45,7 +45,7 @@
             </a>
         </div>
 
-        <div class="card border border-dark border-3">
+        <div class="card border border-dark border-3 shadow">
             <div class="card-header bg-primary text-bold text-dark">
                 <h4 class="text-dark"><i class="bi bi-clipboard-data"></i> Daftar Meja</h4>
             </div>

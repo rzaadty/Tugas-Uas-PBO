@@ -51,7 +51,7 @@
         <div class="container px-3 py-3">
 
             <!-- Edit Form for Menu -->
-            <div class="card border border-dark border-3">
+            <div class="card border border-dark border-3 shadow">
                 <div class="card-header bg-primary text-bold text-dark">
                     <i class="bi bi-pencil"></i> Edit Menu
                 </div>
