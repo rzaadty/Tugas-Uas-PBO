@@ -78,7 +78,7 @@
 					</a>
 				</div>
 				<div class="col-6 col-md-3 mb-3 px-2">
-					<a href="#" class="card h-100 text-center border border-dark border-4">
+					<a href="<?= site_url('Kasir')?>" class="card h-100 text-center border border-dark border-4">
 						<div class="card-body">
 							<i class="bi bi-cash" style="font-size: 40px; color: #000000;"></i>
 							<h5 class="card-title mt-2 text-dark">Kasir</h5>
@@ -110,7 +110,7 @@
 					</a>
 				</div>
 				<div class="col-6 col-md-3 mb-3 px-2">
-					<a href="#" class="card h-100 text-center border border-dark border-4">
+					<a href="<?= site_url('Kategori')?>" class="card h-100 text-center border border-dark border-4">
 						<div class="card-body">
 							<i class="bi bi-tags" style="font-size: 40px; color: #000000;"></i>
 							<h5 class="card-title mt-2 text-dark">Kategori</h5>
@@ -122,14 +122,6 @@
 						<div class="card-body">
 							<i class="bi bi-bar-chart" style="font-size: 40px; color: #000000;"></i>
 							<h5 class="card-title mt-2 text-dark">Laporan</h5>
-						</div>
-					</a>
-				</div>
-				<div class="col-6 col-md-3 mb-3 px-2">
-					<a href="#" class="card h-100 text-center border border-dark border-4">
-						<div class="card-body">
-							<i class="bi bi-person" style="font-size: 40px; color: #000000;"></i>
-							<h5 class="card-title mt-2 text-dark">Profil</h5>
 						</div>
 					</a>
 				</div>

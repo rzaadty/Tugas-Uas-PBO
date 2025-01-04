@@ -8,7 +8,6 @@
 </footer>
 </div>
 </div>
-
 <script src="<?php echo base_url('path/dist/assets/static/js/components/dark.js'); ?>"></script>
 <script src="<?php echo base_url('path/dist/assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js'); ?>"></script>
 <script src="<?php echo base_url('path/dist/assets/compiled/js/app.js'); ?>"></script>
