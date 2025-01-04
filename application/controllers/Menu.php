@@ -15,6 +15,20 @@ class Menu extends CI_Controller {
         $this->load->view('Dashboard/Menu/index', $data);
         $this->load->view('Index/footer');
     }
+    // Halaman tambah menu
+    public function v_tambahmenu() {
+        $data['kategoris'] = $this->Menu_model->get_all_kategori(); 
+        $this->load->view('Index/header');
+        $this->load->view('Dashboard/Menu/add', $data);
+        $this->load->view('Index/footer');
+    }
+    public function v_edit($id_menu) {
+        $data['kategoris'] = $this->Menu_model->get_all_kategori();
+        $data['menu_item'] = $this->Menu_model->get_menu_by_id($id_menu);
+        $this->load->view('Index/header');
+        $this->load->view('Dashboard/Menu/edit', $data);
+        $this->load->view('Index/footer');
+    }
 
     // Fungsi untuk menambah menu
     public function add() {
@@ -29,7 +43,7 @@ class Menu extends CI_Controller {
         $config['upload_path'] = 'path/gambar_menu/';  // Pastikan path folder upload sudah benar
         $config['allowed_types'] = 'jpg|jpeg|png|gif';
         $config['max_size'] = 2048; // Max file size 2MB
-        $config['file_name'] = time() . '_' . $_FILES['gambar']['name'];
+        $config['file_name'] = 'menu_' . time();
         
         $this->upload->initialize($config);
 
@@ -56,49 +70,63 @@ class Menu extends CI_Controller {
         redirect('Menu');
     }
 
-    // Fungsi untuk edit menu
-    public function edit($id_menu) {
-        if ($this->input->post('submit')) {
-            $data = [
-                'kategori' => $this->input->post('kategori'),
-                'nama_barang' => $this->input->post('nama_barang'),
-                'harga_dasar' => $this->input->post('harga_dasar'),
-                'harga_jual' => $this->input->post('harga_jual'),
-                'stok' => $this->input->post('stok'),
-            ];
 
-            // Periksa apakah ada gambar yang di-upload
-            if (!empty($_FILES['gambar']['name'])) {
-                $data['gambar'] = $this->upload_image(); // Fungsi untuk upload gambar
-            }
+// Fungsi untuk mengedit menu berdasarkan id_menu
+public function edit($id_menu) {
+    $this->load->model('Menu_model'); // Load model
 
-            $this->Menu_model->update_menu($id_menu, $data);
-            redirect('Menu');
-        } else {
-            // Ambil data menu yang akan diedit
-            $data['menu_item'] = $this->Menu_model->get_menu_by_id($id_menu);
-            $this->load->view('Index/header');
-            $this->load->view('Dashboard/Menu/edit', $data);
-            $this->load->view('Index/footer');
-        }
+    // Ambil data menu berdasarkan ID
+    $menu_item = $this->Menu_model->get_menu_by_id($id_menu);
+
+    // Pastikan data menu ditemukan
+    if (!$menu_item) {
+        show_404();
     }
 
-    // Fungsi untuk mengupload gambar
-    private function upload_image() {
-        // Konfigurasi upload gambar
-        $config['upload_path'] = 'path/gambar_menu/';  // Pastikan path folder upload sudah benar
-        $config['allowed_types'] = 'jpg|jpeg|png|gif';
-        $config['max_size'] = 2048; // Max file size 2MB
-        $config['file_name'] = time() . '_' . $_FILES['gambar']['name'];
-        
-        $this->upload->initialize($config);
+    // Ambil data dari form
+    $nama_barang = $this->input->post('nama_barang');
+    $kategori = $this->input->post('kategori');
+    $harga_dasar = $this->input->post('harga_dasar');
+    $harga_jual = $this->input->post('harga_jual');
+    $stok = $this->input->post('stok');
 
-        // Proses upload gambar
-        if ($this->upload->do_upload('gambar')) {
-            return $this->upload->data('file_name');
+    // Konfigurasi upload gambar
+    $config['upload_path'] = 'path/gambar_menu/'; // Pastikan path folder upload sudah benar
+    $config['allowed_types'] = 'jpg|jpeg|png|gif';
+    $config['max_size'] = 2048; // Max file size 2MB
+    $config['file_name'] = 'menu_' . time();
+    
+    $this->upload->initialize($config);
+
+    // Proses upload gambar
+    if ($this->upload->do_upload('gambar')) {
+        // Hapus gambar lama jika ada
+        if (!empty($menu_item['gambar']) && file_exists('path/gambar_menu/' . $menu_item['gambar'])) {
+            unlink('path/gambar_menu/' . $menu_item['gambar']);
         }
-        return null;
+        $gambar = $this->upload->data('file_name');
+    } else {
+        $gambar = $menu_item['gambar']; // Gunakan gambar lama jika tidak diupload
     }
+
+    // Data yang akan diupdate
+    $data = [
+        'nama_barang' => $nama_barang,
+        'kategori' => $kategori,
+        'harga_dasar' => $harga_dasar,
+        'harga_jual' => $harga_jual,
+        'stok' => $stok,
+        'gambar' => $gambar
+    ];
+
+    // Update data menu ke database
+    $this->Menu_model->update_menu($id_menu, $data);
+
+    // Redirect ke halaman menu
+    redirect('Menu');
+}
+
+ 
 
     // Fungsi untuk menghapus menu
     public function delete($id) {
