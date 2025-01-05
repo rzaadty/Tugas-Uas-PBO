@@ -35,8 +35,8 @@
 
 <div class="d-flex justify-content-between bg-secondary align-items-center px-3 py-2">
     <h4 class="text-uppercase text-dark">
-        <i class="bi bi-clipboard-data" style="font-size: 30px;"></i>
-        Tambah Menu
+        <i class="bbi bi-card-list" style="font-size: 30px;"></i>
+        Management Menu
     </h4>
 
     <button onclick="window.location='<?= site_url('Menu') ?>'" class="btn btn-dark">
@@ -49,8 +49,8 @@
         <div class="container px-3 py-3">
             <!-- Add Form for Menu -->
             <div class="card border border-dark border-3 shadow">
-                <div class="card-header bg-primary text-bold text-dark">
-                    <i class="bi bi-plus-circle"></i> Tambah Menu
+                <div class="card-header bg-secondary text-bold text-dark">
+                   <h3 class="text-dark"><i class="bi bi-plus-circle"></i> Tambah Menu</h3> 
                 </div>
                 <div class="card-body mt-4">
                     <form action="<?= site_url('Menu/add') ?>" method="POST" enctype="multipart/form-data">

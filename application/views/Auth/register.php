@@ -36,7 +36,7 @@
                             <label for="password" class="form-label">Password</label>
                             <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" required>
                         </div>
-                        <button type="submit" class="btn btn-primary w-100">Register</button>
+                        <button type="submit" class="btn btn-dark w-100">Register</button>
                     </form>
 
                     <!-- Link untuk menuju halaman login -->

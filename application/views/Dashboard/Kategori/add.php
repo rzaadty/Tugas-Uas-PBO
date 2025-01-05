@@ -46,7 +46,7 @@
         <div class="container px-3 py-3">
             <!-- Add Form for Kategori -->
             <div class="card border border-dark border-3 shadow">
-                <div class="card-header bg-primary text-bold text-dark">
+                <div class="card-header bg-secondary text-bold text-dark">
                     <i class="bi bi-plus-circle"></i> Tambah Kategori
                 </div>
                 <div class="card-body mt-4">

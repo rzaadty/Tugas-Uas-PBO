@@ -46,8 +46,8 @@
 
     <div class="d-flex justify-content-between bg-secondary align-items-center px-3 py-2">
         <h4 class="text-uppercase text-dark">
-            <i class="bi bi-cash-coin" style="font-size: 30px;"></i>
-            Kasir
+            <i class="bi bi-basket" style="font-size: 30px;"></i>
+            Dapur
         </h4>
 
         <button onclick="window.location='<?= site_url('Dashboard') ?>'" class="btn btn-dark">
@@ -56,17 +56,18 @@
     </div>
 
     <div class="container mt-3">
-        <div class="card shadow-sm border-3">
+        <div class="card shadow-sm border border-dark border-3">
             <div class="card-header bg-secondary">
-                <h3 class="mb-0 text-dark">Order Details - ID: <?= $order_id; ?></h3>
+                <h3 class="mb-0 text-dark"><i class="bi bi-card-list"></i> Detail Pesanan</h3>
             </div>
             <div class="card-body">
                 <table class="table table-striped" id="table1">
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th>Id</th>
                             <th>Nama Barang</th>
                             <th>Jumlah</th>
+                            <th>No Meja</th>
                             <th>Harga</th>
                         </tr>
                     </thead>
@@ -76,12 +77,13 @@
                                 <td><?= $detail['id_barang']; ?></td>
                                 <td><?= $detail['nama_barang']; ?></td>
                                 <td><?= $detail['jumlah']; ?></td>
+                                <td><?= $detail['id_meja']; ?></td>
                                 <td>Rp <?= number_format($detail['harga_jual'], 0, ',', '.'); ?></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
-                <a href="javascript:history.back()" class="btn btn-secondary">Back to Orders</a>
+                <a href="javascript:history.back()" class="btn btn-secondary">Kembali</a>
             </div>
         </div>
     </div>

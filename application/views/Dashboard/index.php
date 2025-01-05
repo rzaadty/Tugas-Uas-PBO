@@ -56,7 +56,7 @@
 		<div class="container text-center py-3 px-4">
 			<h1 class="mb-3">
 				<img src="<?= base_url('path/gambar_tampilan/logo.png')?>" alt="Logo"
-					style="width: 120px; height: 80px;">
+					style="width: 230px; height: 150px;">
 			</h1>
 			<h2 class="mb-3">Welcome App <br> RESTAURANTKU</h2>
 

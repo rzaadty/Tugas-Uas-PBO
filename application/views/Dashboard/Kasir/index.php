@@ -48,7 +48,7 @@
 	<div class=" d-flex justify-content-between bg-secondary align-items-center  px-3 py-2 ">
 		<h4 class="text-uppercase text-dark">
 			<i class="bi bi-cash-coin" style="font-size: 30px;"></i>
-			Kasir
+			Management Kasir
 		</h4>
 
 		<button onclick="window.location='<?= site_url('Dashboard') ?>'" class="btn btn-dark ">

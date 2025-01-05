@@ -27,7 +27,7 @@
 <div class="background-container">
     <div class="d-flex justify-content-between bg-secondary align-items-center px-3 py-2">
         <h4 class="text-uppercase text-dark">
-            <i class="bi bi-clipboard-data" style="font-size: 30px;"></i>
+            <i class="bi bi-table" style="font-size: 30px;"></i>
             Management Meja
         </h4>
 
@@ -46,8 +46,8 @@
         </div>
 
         <div class="card border border-dark border-3 shadow">
-            <div class="card-header bg-primary text-bold text-dark">
-                <h4 class="text-dark"><i class="bi bi-clipboard-data"></i> Daftar Meja</h4>
+            <div class="card-header bg-secondary text-bold text-dark">
+                <h3 class="text-dark"><i class="bi bi-card-list"></i> Daftar Meja</h3>
             </div>
             <div class="card-body">
                 <div class="table-responsive">

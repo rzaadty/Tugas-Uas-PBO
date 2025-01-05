@@ -56,11 +56,11 @@
     </div>
 
     <div class="container mt-3">
-        <div class="card shadow-sm border-3">
+        <div class="card shadow-sm border border-dark border-3">
             <div class="card-header bg-secondary">
-                <h3 class="mb-0 text-dark">Order List - Dapur</h3>
+                <h3 class="mb-0 text-dark"><i class="bi bi-card-list"></i> Daftar Pesanan - Dapur</h3>
             </div>
-            <div class="card-body">
+            <div class="card-body mt-3">
                 <!-- Dropdown to filter by status -->
                 <form action="<?= site_url('Dapur/filter_orders'); ?>" method="GET">
                     <div class="mb-3">

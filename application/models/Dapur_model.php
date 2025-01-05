@@ -22,13 +22,16 @@ class Dapur_model extends CI_Model {
 
     // Get details of a specific order
     public function get_order_details($id_pesanan) {
-        $this->db->select('d.id_barang, d.jumlah, d.harga_jual, m.nama_barang');
+        $this->db->select('d.id_barang, d.jumlah, d.harga_jual, m.nama_barang, p.id_meja, t.nomor_meja');
         $this->db->from('pesanan_detail d');
         $this->db->join('menu m', 'm.id_menu = d.id_barang');
+        $this->db->join('pesanan p', 'p.id_pesanan = d.id_pesanan');
+        $this->db->join('meja t', 't.id_meja = p.id_meja');
         $this->db->where('d.id_pesanan', $id_pesanan);
         $query = $this->db->get();
         return $query->result_array();
     }
+    
 
     public function get_orders_by_status($status) {
         $this->db->select('p.id_pesanan, p.nama, p.jenis_order, p.total_harga, p.status_pesanan');
