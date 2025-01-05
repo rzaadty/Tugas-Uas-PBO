@@ -59,7 +59,7 @@
 	<div class="container mt-3 px-3">
 		<div class="card shadow-sm border border-dark border-3">
 			<div class="card-header bg-secondary">
-				<h3 class="mb-0 text-dark"><i class="bi bi-list-check"></i> Daftar Menu</h3>
+				<h3 class="mb-0 text-dark"><i class="bi bi-card-list"></i> Daftar Menu</h3>
 			</div>
 			<div class="card-body">
 				<table class="table table-striped table-bordered" id="table1">

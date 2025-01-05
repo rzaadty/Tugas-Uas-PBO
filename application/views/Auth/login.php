@@ -1,9 +1,9 @@
-<div class="container mt-5">
+<div class="container mt-5 px-3">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card shadow">
                 <div class="card-body">
-                    <img src="https://via.placeholder.com/200x100/ff0000/ffffff/?text=Restaurant+Logo" class="img-fluid mx-auto d-block" alt="Restaurant Logo">
+                    <img src="<?= base_url('path/gambar_tampilan/logo.png')?>" class="img-fluid mx-auto d-block" alt="Restaurant Logo">
                     <h2 class="text-center mt-3">Login</h2>
                     <p class="text-center">RESTAURANTKU</p>
 
