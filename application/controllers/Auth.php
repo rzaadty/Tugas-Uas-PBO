@@ -29,7 +29,8 @@ class Auth extends CI_Controller {
 
 			if ($user) {
 				// Set session jika login berhasil
-				$this->session->set_userdata([ 'id_login'=> $user->id_login,
+				$this->session->set_userdata([
+					'id'=> $user->id_login,
 					'nama'=> $user->nama,
 					'role'=> $user->status]);
 

@@ -45,10 +45,13 @@
 
 <div class="background-container">
 	<!-- Header atau bagian atas -->
-	<div class="bg-secondary px-2 py-2 d-flex align-items-center">
-		<img src="<?= base_url('path/gambar_tampilan/logo.png')?>" alt="Logo"
-			style="width: 60px; height: 40px; margin-right: 10px;">
-		<h3 class="text-dark mb-0">Home <br>RESTAURANTKU</h3>
+	<div class="bg-secondary px-2 py-2 d-flex align-items-center justify-content-between">
+		<div class="d-flex align-items-center">
+			<img src="<?= base_url('path/gambar_tampilan/logo.png') ?>" alt="Logo"
+				style="width: 60px; height: 40px; margin-right: 10px;">
+			<h3 class="text-dark mb-0">Home <br>RESTAURANTKU</h3>
+		</div>
+		<h1><a href="<?= base_url('Auth/logout') ?>" class="text-dark text-bold px-3"><i class="bi bi-power"></i></a></h1>
 	</div>
 
 	<!-- Kontainer konten yang dapat digulir -->
@@ -70,7 +73,7 @@
 
 				<!-- MODUL APLIKASI -->
 				<div class="col-6 col-md-3 mb-3 px-2">
-					<a href="#" class="card h-100 text-center border border-dark border-4 shadow">
+					<a href="<?= site_url('Customer_booking')?>" class="card h-100 text-center border border-dark border-4 shadow">
 						<div class="card-body">
 							<i class="bi bi-wifi" style="font-size: 40px; color: #000000;"></i>
 							<h5 class="card-title mt-2 text-dark">Booking Online</h5>
@@ -81,7 +84,7 @@
 					<a href="<?= site_url('Dapur')?>" class="card h-100 text-center border border-dark border-4 shadow">
 						<div class="card-body">
 							<i class="bi bi-basket" style="font-size: 40px; color: #000000;"></i>
-							<h5 class="card-title mt-2 text-dark">Proses</h5>
+							<h5 class="card-title mt-2 text-dark">Daftar Pesanan</h5>
 						</div>
 					</a>
 				</div>=
