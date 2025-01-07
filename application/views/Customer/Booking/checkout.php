@@ -101,17 +101,22 @@
 						</tr>
 					</tfoot>
 				</table>
-<?php var_dump($this->session->userdata('id'))?>
-				<form action="<?= site_url('Customer_booking/buat_pesanan'); ?>" method="post">
+				<?php if ($this->session->flashdata('error')): ?>
+				<div class="alert alert-danger">
+					<?= $this->session->flashdata('error'); ?>
+				</div>
+				<?php endif; ?>
+
+
+				<form action="<?= site_url('Customer_booking/buat_pesanan'); ?>" method="post"
+					enctype="multipart/form-data">
 					<div class="mb-3">
 						<label for="nama" class="form-label">Atas Nama</label>
 						<input type="text" name="nama" id="nama" class="form-control"
-							value="<?= $this->session->userdata('nama'); ?>"
-							placeholder="<?= $this->session->userdata('nama'); ?>" readonly>
+							value="<?= $this->session->userdata('nama'); ?>" readonly>
 					</div>
 					<div id="hidden_data" style="display: none;">
-						<input type="hidden" name="id_pemesan_online"
-							value="<?= $this->session->userdata('id'); ?>">
+						<input type="hidden" name="id_pemesan_online" value="<?= $this->session->userdata('id'); ?>">
 					</div>
 					<div class="mb-3">
 						<label for="id_meja" class="form-label">Nomor Meja</label>
@@ -126,7 +131,6 @@
 							<?php endif; ?>
 						</select>
 					</div>
-
 					<div class="mb-3">
 						<label for="jenis_order" class="form-label">Jenis Order</label>
 						<select name="jenis_order" id="jenis_order" class="form-select" readonly>
@@ -145,15 +149,15 @@
 							placeholder="Masukkan nominal uang" required>
 					</div>
 					<div class="mb-3">
-						<label for="uang_bayar" class="form-label">Bukti Transfer</label>
-						<input type="file" name="bukti_pembayaran" id="bukti_pembayaran" class="form-control"
-							placeholder="Masukkan nominal uang" required>
+						<label for="bukti_pembayaran" class="form-label">Bukti Transfer</label>
+						<input type="file" name="bukti_pembayaran" id="bukti_pembayaran" class="form-control" required>
 					</div>
 					<div class="footer-btn float-end">
 						<button type="submit" class="btn btn-success"><i class="bi bi-check-circle"></i> Proses
 							Pesanan</button>
 					</div>
 				</form>
+
 			</div>
 		</div>
 	</div>

@@ -1,54 +1,76 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
+class Customer_booking_model extends CI_Model {
 
-class Dapur_model extends CI_Model {
+	// Fungsi untuk menambah pesanan baru
+	public function tambah_pesanan($data_pesanan) {
+		$this->db->insert('pesanan', $data_pesanan); // Menyimpan data pesanan ke dalam tabel pesanan
 
-    // Fetch all orders with status "Menunggu" (Waiting)
-    public function get_orders() {
-        $this->db->select('p.id_pesanan, p.nama, p.jenis_order, p.total_harga, p.status_pesanan');
-        $this->db->from('pesanan p');
-        $this->db->where('p.status_pesanan', 'Menunggu');
-        $this->db->order_by('p.tanggal', 'ASC');
-        $query = $this->db->get();
-        return $query->result_array();
-    }
+		if ($this->db->affected_rows() > 0) {
+			return $this->db->insert_id(); // Mengembalikan ID pesanan jika berhasil
+		} else {
+			return false; // Mengembalikan false jika gagal menyimpan data
+		}
+	}
 
-    // Update the status of the order (e.g., from "Menunggu" to "Diproses")
-    public function update_order_status($id_pesanan, $status) {
-        $data = array('status_pesanan' => $status);
-        $this->db->where('id_pesanan', $id_pesanan);
-        return $this->db->update('pesanan', $data);
-    }
+	// Fungsi untuk menambah detail pesanan
+	public function tambah_detail_pesanan($data_detail) {
+		$this->db->insert('pesanan_detail', $data_detail); // Menyimpan detail pesanan ke dalam tabel pesanan_detail
+	}
 
-    // Get details of a specific order
-    public function get_order_details($id_pesanan) {
-        $this->db->select('d.id_barang, d.jumlah, d.harga_jual, m.nama_barang, p.id_meja, t.nomor_meja');
-        $this->db->from('pesanan_detail d');
-        $this->db->join('menu m', 'm.id_menu = d.id_barang');
-        $this->db->join('pesanan p', 'p.id_pesanan = d.id_pesanan');
-        $this->db->join('meja t', 't.id_meja = p.id_meja');
-        $this->db->where('d.id_pesanan', $id_pesanan);
-        $query = $this->db->get();
-        return $query->result_array();
-    }
-    
+	// Fungsi untuk mengurangi stok menu setelah pesanan dibuat
+	public function kurangi_stok($id_barang, $qty) {
+		// Mengurangi stok barang di tabel menu berdasarkan ID barang dan jumlah (qty) yang dipesan
+		$this->db->set('stok', 'stok - '. (int)$qty, FALSE); // Kurangi stok sesuai dengan qty yang dipesan
+		$this->db->where('id_menu', $id_barang); // Menyaring berdasarkan ID barang
+		$this->db->update('menu'); // Update stok barang di tabel menu
+	}
 
-    public function get_orders_by_status($status) {
-        $this->db->select('p.id_pesanan, p.nama, p.jenis_order, p.total_harga, p.status_pesanan');
-        $this->db->from('pesanan p');
-        $this->db->where('p.status_pesanan', $status);  // Filter orders by the selected status
-        $this->db->order_by('p.tanggal', 'ASC');
-        $query = $this->db->get();
-        return $query->result_array();
-    }
-    
-    public function get_all_orders() {
-        $this->db->select('p.id_pesanan, p.nama, p.jenis_order, p.total_harga, p.status_pesanan');
-        $this->db->from('pesanan p');
-        $this->db->order_by('p.tanggal', 'ASC');
-        $query = $this->db->get();
-        return $query->result_array();
-    }
-    
+	// Fungsi untuk mendapatkan semua pesanan
+	public function get_all_pesanan() {
+		// Mengambil semua data pesanan dari tabel pesanan
+		$query = $this->db->get('pesanan');
+		return $query->result_array(); // Mengembalikan hasil sebagai array
+	}
+
+	// Fungsi untuk mendapatkan detail pesanan berdasarkan ID pesanan
+	public function get_detail_pesanan($id_pesanan) {
+		// Mengambil detail pesanan berdasarkan ID pesanan
+		$this->db->select('
+			pesanan_detail.id_pesanan,
+			pesanan_detail.id_barang,
+			pesanan_detail.jumlah,
+			pesanan_detail.harga_jual,
+			menu.nama_barang,
+			pesanan.uang_bayar,
+			pesanan.kembalian '); // Kolom yang akan diambil
+		$this->db->from('pesanan_detail');
+		$this->db->join('menu', 'menu.id_menu = pesanan_detail.id_barang', 'left'); // Join dengan tabel menu untuk mendapatkan nama barang
+		$this->db->join('pesanan', 'pesanan.id_pesanan = pesanan_detail.id_pesanan', 'left'); // Join dengan tabel pesanan untuk mendapatkan informasi pesanan
+		$this->db->where('pesanan_detail.id_pesanan', $id_pesanan); // Filter berdasarkan ID pesanan
+		$query = $this->db->get(); // Jalankan query
+		return $query->result_array(); // Kembalikan hasil query sebagai array
+	}
+
+	// Fungsi untuk mendapatkan semua data meja
+	public function get_all_meja() {
+		// Mengambil semua data meja dari tabel meja
+		$query = $this->db->get('meja');
+		return $query->result_array(); // Mengembalikan hasil sebagai array
+	}
+
+	// Fungsi untuk mengambil semua menu (barang)
+	public function get_all_menu() {
+		// Mengambil semua data menu (barang) dari tabel menu
+		$query = $this->db->get('menu');
+		return $query->result_array(); // Mengembalikan hasil sebagai array
+	}
+
+	// Fungsi untuk mendapatkan pesanan berdasarkan ID pesanan
+	public function get_pesanan_by_id($id_pesanan) {
+		// Mengambil data pesanan berdasarkan ID pesanan
+		$this->db->where('id_pesanan', $id_pesanan);
+		$query = $this->db->get('pesanan'); // Menjalankan query untuk mendapatkan pesanan
+		return $query->row_array(); // Mengembalikan satu baris data pesanan
+	}
 }
-

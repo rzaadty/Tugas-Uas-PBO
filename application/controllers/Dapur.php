@@ -7,48 +7,45 @@ class Dapur extends CI_Controller {
         $this->load->model('Dapur_model');
     }
 
+    // Fungsi untuk menampilkan halaman utama dengan daftar pesanan
     public function index() {
-        $data['orders'] = $this->Dapur_model->get_orders();
-        $this->load->view('Index/header');
-        $this->load->view('Dashboard/Dapur/index', $data);
-        $this->load->view('Index/footer');
+        $data['orders'] = $this->Dapur_model->get_orders(); // Mendapatkan daftar pesanan
+        $this->load->view('Index/header'); // Memuat header
+        $this->load->view('Dashboard/Dapur/index', $data); // Memuat halaman utama dengan daftar pesanan
+        $this->load->view('Index/footer'); // Memuat footer
     }
 
+    // Fungsi untuk melihat detail pesanan berdasarkan ID pesanan
     public function view_order($id_pesanan) {
-        $data['order_details'] = $this->Dapur_model->get_order_details($id_pesanan);
-        $data['order_id'] = $id_pesanan;
-        $this->load->view('Index/header');
-        $this->load->view('Dashboard/Dapur/detail_order', $data);
-        $this->load->view('Index/footer');
+        $data['order_details'] = $this->Dapur_model->get_order_details($id_pesanan); // Mendapatkan detail pesanan
+        $data['order_id'] = $id_pesanan; // Menyimpan ID pesanan
+        $this->load->view('Index/header'); // Memuat header
+        $this->load->view('Dashboard/Dapur/detail_order', $data); // Memuat halaman detail pesanan
+        $this->load->view('Index/footer'); // Memuat footer
     }
 
+    // Fungsi untuk memperbarui status pesanan berdasarkan ID pesanan dan status baru
     public function update_status($id_pesanan, $status) {
-        $this->Dapur_model->update_order_status($id_pesanan, $status);
-        redirect('Dapur');
+        $this->Dapur_model->update_order_status($id_pesanan, $status); // Memperbarui status pesanan
+        redirect('Dapur'); // Mengarahkan kembali ke halaman utama
     }
 
+    // Fungsi untuk memfilter pesanan berdasarkan status
     public function filter_orders() {
-        $status_filter = $this->input->get('status_filter');  // Get the selected status filter from the dropdown
+        $status_filter = $this->input->get('status_filter'); // Mendapatkan status filter dari input pengguna
     
-        // If status_filter is empty, get all orders
+        // Jika status filter ada, ambil pesanan berdasarkan status tersebut
         if ($status_filter) {
-            // Get orders based on selected status
-            $orders = $this->Dapur_model->get_orders_by_status($status_filter);
+            $orders = $this->Dapur_model->get_orders_by_status($status_filter); // Mendapatkan pesanan berdasarkan status
         } else {
-            // Get all orders if no filter is selected
-            $orders = $this->Dapur_model->get_all_orders();
+            // Jika tidak ada filter, ambil semua pesanan
+            $orders = $this->Dapur_model->get_all_orders(); // Mendapatkan semua pesanan
         }
     
-        // Pass the filtered orders to the view
-        $data['orders'] = $orders;
+        $data['orders'] = $orders; // Menyimpan daftar pesanan ke dalam data
     
-        // Load the view
-        $this->load->view('Index/header');
-        $this->load->view('Dashboard/Dapur/order_list', $data);
-        $this->load->view('Index/footer');
+        $this->load->view('Index/header'); // Memuat header
+        $this->load->view('Dashboard/Dapur/order_list', $data); // Memuat halaman daftar pesanan
+        $this->load->view('Index/footer'); // Memuat footer
     }
-    
 }
-
-
-

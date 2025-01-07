@@ -3,145 +3,146 @@
 class Customer_booking extends CI_Controller {
 
     public function __construct() {
-		parent::__construct();
-		$this->load->model('Customer_booking_model');
-		$this->load->library('cart'); // Load library cart
-	}
+        parent::__construct();
+        $this->load->model('Customer_booking_model');
+        $this->load->library('cart');
+        $this->load->library('upload');
+    }
 
-	public function index() {
+    // Menampilkan halaman utama pemesanan
+    public function index() {
+        $data['meja_items'] = $this->Customer_booking_model->get_all_meja(); // Mengambil data meja
+        $data['menu_items'] = $this->Customer_booking_model->get_all_menu(); // Mengambil data menu
+        $this->load->view('Index/header');
+        $this->load->view('Customer/Booking/index', $data);
+        $this->load->view('Index/footer');
+    }
 
-        $data['meja_items']=$this->Customer_booking_model->get_all_meja();
-		$data['menu_items']=$this->Customer_booking_model->get_all_menu();
-		$this->load->view('Index/header');
-		$this->load->view('Customer/Booking/index',$data);
-		$this->load->view('Index/footer');
+    // Menambahkan item ke dalam cart
+    public function tambah_ke_cart() {
+        $data = array(
+            'id' => $this->input->post('id_barang'), // ID barang
+            'name' => $this->input->post('nama_barang'), // Nama barang
+            'price' => $this->input->post('harga'), // Harga barang
+            'qty' => $this->input->post('jumlah') // Jumlah barang
+        );
+        $this->cart->insert($data); // Menambahkan item ke dalam cart
+        redirect('Customer_booking/lihat_cart'); // Redirect ke halaman lihat cart
+    }
 
-	}
+    // Menampilkan isi cart
+    public function lihat_cart() {
+        $data['cart_items'] = $this->cart->contents(); // Mengambil data isi cart
+        $data['total_harga'] = $this->cart->total(); // Menghitung total harga
+        $this->load->view('Index/header_customer');
+        $this->load->view('Customer/Booking/lihat_cart', $data);
+        $this->load->view('Index/footer_customer');
+    }
 
-	// Fungsi untuk menambah item ke cart
-	public function tambah_ke_cart() {
-		$data=array('id'=> $this->input->post('id_barang'),
-			'name'=> $this->input->post('nama_barang'),
-			'price'=> $this->input->post('harga'),
-			'qty'=> $this->input->post('jumlah'));
+    // Menghapus item dari cart
+    public function hapus_item_cart($rowid) {
+        $data = array('rowid' => $rowid, 'qty' => 0); // Menentukan item yang akan dihapus
+        $this->cart->update($data); // Menghapus item dari cart
+        redirect('Customer_booking/lihat_cart'); // Redirect ke halaman lihat cart
+    }
 
-		$this->cart->insert($data); // Menambahkan item ke cart
-		redirect('Customer_booking/lihat_cart');
-	}
+    // Menampilkan halaman checkout
+    public function checkout() {
+        $data['cart_items'] = $this->cart->contents(); // Mengambil data isi cart
+        $data['total_harga'] = $this->cart->total(); // Menghitung total harga
+        $data['meja_items'] = $this->Customer_booking_model->get_all_meja(); // Mengambil data meja
+        $this->load->view('Index/header_customer');
+        $this->load->view('Customer/Booking/checkout', $data);
+        $this->load->view('Index/footer_customer');
+    }
 
-	// Fungsi untuk melihat isi cart
-	public function lihat_cart() {
-		$data['cart_items']=$this->cart->contents(); // Mendapatkan isi cart
-		$data['total_harga']=$this->cart->total(); // Total harga cart
-		$this->load->view('Index/header_customer');
-		$this->load->view('Customer/Booking/lihat_cart', $data);
-		$this->load->view('Index/footer_customer');
-	}
+    // Memproses pembuatan pesanan
+    public function buat_pesanan() {
+        if ($this->input->post()) {
+            // Validasi form
+            $this->form_validation->set_rules('id_meja', 'Nomor Meja', 'required');
+            $this->form_validation->set_rules('uang_bayar', 'Uang Dibayarkan', 'required|numeric');
+            $this->form_validation->set_rules('bukti_pembayaran', 'Bukti Pembayaran', 'callback_file_check');
 
-	// Fungsi untuk menghapus item dari cart
-	public function hapus_item_cart($rowid) {
-		$data=array('rowid'=> $rowid,
-			'qty'=> 0);
+            if ($this->form_validation->run() == FALSE) {
+                $this->load->view('customer_booking_view'); // Menampilkan halaman form jika validasi gagal
+            } else {
+                $uang_bayar = $this->input->post('uang_bayar');
+                $total_harga = $this->cart->total();
+                $kembalian = $uang_bayar - $total_harga;
 
-		$this->cart->update($data); // Menghapus item berdasarkan rowid
-		redirect('Customer_booking/lihat_cart');
-	}
+                // Menyiapkan data pesanan
+                $data = array(
+                    'id_pemesan_online' => $this->session->userdata('id'),
+                    'id_meja' => $this->input->post('id_meja'),
+                    'jenis_order' => $this->input->post('jenis_order'),
+                    'metode_pembayaran' => $this->input->post('metode_pembayaran'),
+                    'uang_bayar' => $this->input->post('uang_bayar'),
+                    'kembalian' => $kembalian,
+                    'tanggal' => date('Y-m-d H:i:s'),
+                    'status_pesanan' => 'Menunggu',
+                );
 
-	// Fungsi checkout
-	public function checkout() {
-		// Mendapatkan data dari keranjang belanja
-		$data['cart_items']=$this->cart->contents();
-		$data['total_harga']=$this->cart->total();
-		$data['meja_items']=$this->Customer_booking_model->get_all_meja();
-		// Memuat halaman checkout
-		$this->load->view('Index/header_customer');
-		$this->load->view('Customer/Booking/checkout', $data);
-		$this->load->view('Index/footer_customer');
-	}
+                // Upload bukti pembayaran jika ada
+                if ($_FILES['bukti_pembayaran']['name']) {
+                    $config['upload_path'] = FCPATH . 'uploads/bukti_transfer/';
+                    $config['allowed_types'] = 'jpg|jpeg|png|gif|pdf';
+                    $config['max_size'] = 2048;
+                    $this->upload->initialize($config);
 
-	public function buat_pesanan() {
-		$id_meja = $this->input->post('id_meja');
-		$id_pemesan_online = $this->input->post('id_pemesan_online');; // Ambil dari session user
-		$nama = $this->input->post('nama');
-		$jenis_order = $this->input->post('jenis_order');
-		$metode_pembayaran = $this->input->post('metode_pembayaran');
-		$total_harga = $this->cart->total();
-		$uang_bayar = $this->input->post('uang_bayar');
-		$kembalian = $uang_bayar - $total_harga;
-		$status_pesanan = 'Menunggu';
-	
-		// Data pesanan
-		$data_pesanan = array(
-			'id_meja' => $id_meja,
-			'id_pemesan_online' => $id_pemesan_online,
-			'nama' => $nama,
-			'jenis_order' => $jenis_order,
-			'metode_pembayaran' => $metode_pembayaran,
-			'total_harga' => $total_harga,
-			'uang_bayar' => $uang_bayar,
-			'kembalian' => $kembalian,
-			'tanggal' => date('Y-m-d H:i:s'),
-			'status_pesanan' => $status_pesanan
-		);
-	
-		// Menambahkan pesanan
-		$id_pesanan = $this->Customer_booking_model->tambah_pesanan($data_pesanan);
-	
-		// Menambahkan detail pesanan dari cart
-		foreach ($this->cart->contents() as $item) {
-			$data_detail = array(
-				'id_pesanan' => $id_pesanan,
-				'id_barang' => $item['id'],
-				'jumlah' => $item['qty'],
-				'harga_jual' => $item['price']
-			);
-			$this->Customer_booking_model->tambah_detail_pesanan($data_detail);
-	
-			// Mengurangi stok barang
-			$this->Customer_booking_model->kurangi_stok($item['id'], $item['qty']);
-		}
-	
-		// Jika ada bukti transfer, upload dan simpan ke tabel bukti_pembayaran
-		if (!empty($_FILES['bukti_pembayaran']['name'])) {
-			$config['upload_path'] = 'path/gambar_bukti_transfer/';
-			$config['allowed_types'] = 'jpg|jpeg|png|gif';
-			$config['max_size'] = 2048; // Maksimal 2MB
-			$this->load->library('upload', $config);
-	
-			if ($this->upload->do_upload('bukti_pembayaran')) {
-				$upload_data = $this->upload->data();
-				$data_bukti = array(
-					'id_pesanan' => $id_pesanan,
-					'nama_file' => $upload_data['file_name'],
-					'path' => 'path/gambar_bukti_transfer/' . $upload_data['file_name'],
-					'tanggal_upload' => date('Y-m-d H:i:s')
-				);
-				$this->Customer_booking_model->simpan_bukti_transfer($data_bukti);
-			} else {
-				// Tangani error upload
-				$error = $this->upload->display_errors();
-				$this->session->set_flashdata('error', 'Upload bukti transfer gagal: ' . $error);
-			}
-		}
-	
-		// Kosongkan cart setelah pesanan dibuat
-		$this->cart->destroy();
-	
-		// Redirect ke halaman konfirmasi pesanan
-		redirect('Customer_booking/konfirmasi_pesanan/' . $id_pesanan);
-	}
-	
+                    if ($this->upload->do_upload('bukti_pembayaran')) {
+                        $data['bukti_pembayaran'] = $this->upload->data('file_name');
+                    } else {
+                        $this->session->set_flashdata('error', $this->upload->display_errors());
+                        redirect('Customer_booking/buat_pesanan');
+                    }
+                }
 
+                // Menyimpan data pesanan ke database
+                $insert = $this->Customer_booking_model->tambah_pesanan($data);
 
-	// Fungsi untuk konfirmasi pesanan
-	public function konfirmasi_pesanan($id_pesanan) {
-		$data['pesanan']=$this->Customer_booking_model->get_all_pesanan();
-		$data['detail_pesanan']=$this->Customer_booking_model->get_detail_pesanan($id_pesanan);
+                if ($insert) {
+                    // Menyimpan detail pesanan dan mengurangi stok barang
+                    foreach ($this->cart->contents() as $item) {
+                        $data_detail = array(
+                            'id_pesanan' => $insert,
+                            'id_barang' => $item['id'],
+                            'jumlah' => $item['qty'],
+                            'harga_jual' => $item['price']
+                        );
+                        $this->Customer_booking_model->tambah_detail_pesanan($data_detail);
+                        $this->Customer_booking_model->kurangi_stok($item['id'], $item['qty']);
+                    }
 
-		// Memuat view konfirmasi
-		$this->load->view('Index/header_customer');
-		$this->load->view('Customer/Booking/konfirmasi_pesanan', $data);
-		$this->load->view('Index/footer_customer');
-	}
+                    $this->cart->destroy(); // Menghapus cart setelah pemesanan
 
+                    $this->session->set_flashdata('success', 'Pesanan berhasil diproses!');
+                    redirect('Customer_booking/konfirmasi_pesanan/' . $insert); // Redirect ke halaman konfirmasi
+                } else {
+                    $this->session->set_flashdata('error', 'Gagal memproses pesanan, coba lagi.');
+                    redirect('Customer_booking/buat_pesanan');
+                }
+            }
+        } else {
+            $this->load->view('customer_booking_view');
+        }
+    }
+
+    // Validasi file bukti pembayaran
+    public function file_check($str) {
+        if ($_FILES['bukti_pembayaran']['size'] == 0) {
+            $this->form_validation->set_message('file_check', 'The {field} field is required.');
+            return FALSE;
+        }
+        return TRUE;
+    }
+
+    // Menampilkan halaman konfirmasi pesanan
+    public function konfirmasi_pesanan($id_pesanan) {
+        $data['pesanan'] = $this->Customer_booking_model->get_pesanan_by_id($id_pesanan); // Mengambil data pesanan berdasarkan ID
+        $data['detail_pesanan'] = $this->Customer_booking_model->get_detail_pesanan($id_pesanan); // Mengambil detail pesanan
+        $this->load->view('Index/header_customer');
+        $this->load->view('Customer/Booking/konfirmasi_pesanan', $data);
+        $this->load->view('Index/footer_customer');
+    }
 }
