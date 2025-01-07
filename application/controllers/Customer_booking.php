@@ -85,7 +85,7 @@ class Customer_booking extends CI_Controller {
 
                 // Upload bukti pembayaran jika ada
                 if ($_FILES['bukti_pembayaran']['name']) {
-                    $config['upload_path'] = FCPATH . 'uploads/bukti_transfer/';
+                    $config['upload_path'] = FCPATH . 'path/gambar_bukti_transfer/';
                     $config['allowed_types'] = 'jpg|jpeg|png|gif|pdf';
                     $config['max_size'] = 2048;
                     $this->upload->initialize($config);
