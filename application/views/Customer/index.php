@@ -87,7 +87,7 @@
 							<h5 class="card-title mt-2 text-dark">Daftar Pesanan</h5>
 						</div>
 					</a>
-				</div>=
+				</div>
 				<div class="col-6 col-md-3 mb-3 px-2">
 					<a href="#" class="card h-100 text-center border border-dark border-4 shadow">
 						<div class="card-body">

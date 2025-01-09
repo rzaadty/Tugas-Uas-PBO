@@ -19,17 +19,17 @@ class Customer_pesanan extends CI_Controller {
 		$data['orders'] = $this->Customer_pesanan_model->get_orders_by_user($user_id);
 	
 		// Load views dengan data
-		$this->load->view('Index/header');
+		$this->load->view('Index/header_customer');
 		$this->load->view('Customer/Pesanan/index', $data);
-		$this->load->view('Index/footer');
+		$this->load->view('Index/footer_customer');
 	}
 
 	public function view_order($id_pesanan) {
         $data['order_details'] = $this->Customer_pesanan_model->get_order_details($id_pesanan);
         $data['order_id'] = $id_pesanan;
-        $this->load->view('Index/header');
+        $this->load->view('Index/header_customer');
         $this->load->view('Customer/Pesanan/detail_order', $data);
-        $this->load->view('Index/footer');
+        $this->load->view('Index/footer_customer');
     }
 	
 

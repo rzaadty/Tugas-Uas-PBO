@@ -5,10 +5,10 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Halaman Aduan</title>
+	<title>DASHBOARD CUSTOMER</title>
 
 
-	<link rel="shortcut icon" href="<?php echo base_url('path/image/logo.png'); ?>"
+	<link rel="shortcut icon" href="<?php echo base_url('path/gambar_tampilan/logo.png'); ?>"
 		type="image/x-icon">
 
 	<link rel="stylesheet" href="<?php echo base_url('path/dist/assets/compiled/css/app.css'); ?>">

@@ -5,7 +5,7 @@ class Customer_pesanan_model extends CI_Model {
 
     // Fetch all orders with status "Menunggu" (Waiting)
     public function get_orders_by_user($user_id) {
-        $this->db->select('p.id_pesanan, p.nama, p.jenis_order, p.total_harga, p.status_pesanan');
+        $this->db->select('*');
         $this->db->from('pesanan p');
         $this->db->where('p.id_pemesan_online', $user_id); // Filter berdasarkan id_pemesan_online
         $this->db->order_by('p.tanggal', 'ASC');
@@ -22,7 +22,23 @@ class Customer_pesanan_model extends CI_Model {
     }
 
     public function get_order_details($id_pesanan) {
-        $this->db->select('d.id_barang, d.jumlah, d.harga_jual, m.nama_barang, p.id_meja, t.nomor_meja');
+        $this->db->select('
+            d.id_barang,
+            d.jumlah,
+            d.harga_jual,
+            m.nama_barang,
+            p.id_meja,
+            p.nama,
+            p.jenis_order,
+            p.metode_pembayaran,
+            p.total_harga,
+            p.uang_bayar,
+            p.kembalian,
+            p.tanggal,
+            p.status_pesanan,
+            p.bukti_pembayaran,
+            t.nomor_meja
+        ');
         $this->db->from('pesanan_detail d');
         $this->db->join('menu m', 'm.id_menu = d.id_barang');
         $this->db->join('pesanan p', 'p.id_pesanan = d.id_pesanan');
@@ -31,6 +47,7 @@ class Customer_pesanan_model extends CI_Model {
         $query = $this->db->get();
         return $query->result_array();
     }
+    
     
     
     

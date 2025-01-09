@@ -13,9 +13,9 @@ class Customer_booking extends CI_Controller {
     public function index() {
         $data['meja_items'] = $this->Customer_booking_model->get_all_meja(); // Mengambil data meja
         $data['menu_items'] = $this->Customer_booking_model->get_all_menu(); // Mengambil data menu
-        $this->load->view('Index/header');
+        $this->load->view('Index/header_customer');
         $this->load->view('Customer/Booking/index', $data);
-        $this->load->view('Index/footer');
+        $this->load->view('Index/footer_customer');
     }
 
     // Menambahkan item ke dalam cart
@@ -83,6 +83,7 @@ class Customer_booking extends CI_Controller {
                     'kembalian' => $kembalian,
                     'tanggal' => date('Y-m-d H:i:s'),
                     'status_pesanan' => 'Menunggu',
+                    'reservasi' => 'yes',
                 );
 
                 // Upload bukti pembayaran jika ada

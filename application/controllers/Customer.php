@@ -4,9 +4,9 @@ class Customer extends CI_Controller {
 
 	public function index() {
 
-		$this->load->view('Index/header');
+		$this->load->view('Index/header_customer');
 		$this->load->view('Customer/index');
-		$this->load->view('Index/footer');
+		$this->load->view('Index/footer_customer');
 
 	}
 
