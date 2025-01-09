@@ -50,7 +50,7 @@
             Daftar Pesanan
         </h4>
 
-        <button onclick="window.location='<?= site_url('Customer') ?>'" class="btn btn-dark">
+        <button onclick="window.location='<?= site_url('Customer_pesanan') ?>'" class="btn btn-dark">
             <i class="bi bi-arrow-left"></i>
         </button>
     </div>
@@ -58,37 +58,32 @@
     <div class="container mt-3">
         <div class="card shadow-sm border border-dark border-3">
             <div class="card-header bg-secondary">
-                <h3 class="mb-0 text-dark"><i class="bi bi-card-list"></i> Daftar Pesanan</h3>
+                <h3 class="mb-0 text-dark"><i class="bi bi-card-list"></i> Detail Pesanan</h3>
             </div>
-            <div class="card-body mt-3">
-        
-
+            <div class="card-body">
                 <table class="table table-striped" id="table1">
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Nama</th>
-                            <th>Jenis Order</th>
-                            <th>Total Harga</th>
-                            <th>Status</th>
-                            <th>Action</th>
+                            <th>Id</th>
+                            <th>Nama Barang</th>
+                            <th>Jumlah</th>
+                            <th>No Meja</th>
+                            <th>Harga</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($orders as $order): ?>
+                        <?php foreach ($order_details as $detail): ?>
                             <tr>
-                                <td><?= $order['id_pesanan']; ?></td>
-                                <td><?= $order['nama']; ?></td>
-                                <td><?= $order['jenis_order']; ?></td>
-                                <td>Rp <?= number_format($order['total_harga'], 0, ',', '.'); ?></td>
-                                <td><?= $order['status_pesanan']; ?></td>
-                                <td>
-                                    <a href="<?= site_url('Customer_pesanan/view_order/'.$order['id_pesanan']); ?>" class="btn btn-info btn-sm"><i class="bi bi-eye"></i>Ki</a>
-                                </td>
+                                <td><?= $detail['id_barang']; ?></td>
+                                <td><?= $detail['nama_barang']; ?></td>
+                                <td><?= $detail['jumlah']; ?></td>
+                                <td><?= $detail['id_meja']; ?></td>
+                                <td>Rp <?= number_format($detail['harga_jual'], 0, ',', '.'); ?></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
+                <a href="javascript:history.back()" class="btn btn-secondary">Kembali</a>
             </div>
         </div>
     </div>

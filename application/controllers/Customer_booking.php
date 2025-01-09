@@ -75,8 +75,10 @@ class Customer_booking extends CI_Controller {
                 $data = array(
                     'id_pemesan_online' => $this->session->userdata('id'),
                     'id_meja' => $this->input->post('id_meja'),
+                    'nama' => $this->input->post('nama'),
                     'jenis_order' => $this->input->post('jenis_order'),
                     'metode_pembayaran' => $this->input->post('metode_pembayaran'),
+                    'total_harga' => $this->cart->total(),
                     'uang_bayar' => $this->input->post('uang_bayar'),
                     'kembalian' => $kembalian,
                     'tanggal' => date('Y-m-d H:i:s'),
