@@ -80,7 +80,8 @@ class Kasir extends CI_Controller {
 			'uang_bayar'=> $uang_bayar,
 			'kembalian'=> $kembalian,
 			'tanggal'=> date('Y-m-d H:i:s'),
-			'status_pesanan'=> $status_pesanan);
+			'status_pesanan'=> $status_pesanan,
+			'reservasi' => 'no');
 
 		// Menambahkan pesanan
 		$id_pesanan=$this->Kasir_model->tambah_pesanan($data_pesanan);

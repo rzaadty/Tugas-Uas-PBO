@@ -21,9 +21,8 @@ class Auth_model extends CI_Model {
 	}
 
 	// Fungsi untuk register user
-	public function register_user($data) {
-		// Meng-hash password sebelum disimpan
-		$data['password']=password_hash($data['password'], PASSWORD_BCRYPT);
-		$this->db->insert('login', $data);
-	}
+    public function register_user($data) {
+        // Insert data ke tabel login
+        return $this->db->insert('login', $data);
+    }
 }

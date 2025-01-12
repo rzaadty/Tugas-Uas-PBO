@@ -24,7 +24,7 @@ class Booking extends CI_Controller {
 
     public function update_status($id_pesanan, $status) {
         $this->Dapur_model->update_order_status($id_pesanan, $status);
-        redirect('Dapur');
+        redirect('Booking');
     }
 
     public function filter_orders() {

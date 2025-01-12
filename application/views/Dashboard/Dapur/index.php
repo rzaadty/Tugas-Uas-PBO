@@ -93,27 +93,27 @@
 						</tr>
 					</thead>
 					<tbody>
-						<?php $no = 1; ?>
-						<?php foreach ($orders as $order): ?>
-						<tr>
-							<td><?= $no++; ?></td>
-							<td><?= $order['nama']; ?></td>
-							<td><?= $order['jenis_order']; ?></td>
-							<td>Rp <?= number_format($order['total_harga'], 0, ',', '.'); ?></td>
-							<td><?= $order['status_pesanan']; ?></td>
-							<td>
-								<a href="<?= site_url('Dapur/view_order/'.$order['id_pesanan']); ?>"
-									class="btn btn-info btn-sm">View</a>
-								<?php if ($order['status_pesanan'] == 'Menunggu'): ?>
-								<a href="<?= site_url('Dapur/update_status/'.$order['id_pesanan'].'/Diproses'); ?>"
-									class="btn btn-warning btn-sm">Start Processing</a>
-								<?php elseif ($order['status_pesanan'] == 'Diproses'): ?>
-								<a href="<?= site_url('Dapur/update_status/'.$order['id_pesanan'].'/Selesai'); ?>"
-									class="btn btn-success btn-sm">Complete</a>
-								<?php endif; ?>
-							</td>
-						</tr>
-						<?php endforeach; ?>
+					<?php $no = 1; ?>
+    <?php foreach ($orders as $order): ?>
+        <!-- Tampilkan hanya jika reservasi = 'no' -->
+        <?php if ($order['reservasi'] == 'no'): ?>
+            <tr>
+                <td><?= $no++; ?></td>
+                <td><?= $order['nama']; ?></td>
+                <td><?= $order['jenis_order']; ?></td>
+                <td>Rp <?= number_format($order['total_harga'], 0, ',', '.'); ?></td>
+                <td><?= $order['status_pesanan']; ?></td>
+                <td>
+                    <a href="<?= site_url('Dapur/view_order/'.$order['id_pesanan']); ?>" class="btn btn-info btn-sm">View</a>
+                    <?php if ($order['status_pesanan'] == 'Menunggu'): ?>
+                        <a href="<?= site_url('Dapur/update_status/'.$order['id_pesanan'].'/Diproses'); ?>" class="btn btn-warning btn-sm">Start Processing</a>
+                    <?php elseif ($order['status_pesanan'] == 'Diproses'): ?>
+                        <a href="<?= site_url('Dapur/update_status/'.$order['id_pesanan'].'/Selesai'); ?>" class="btn btn-success btn-sm">Complete</a>
+                    <?php endif; ?>
+                </td>
+            </tr>
+        <?php endif; ?>
+    <?php endforeach; ?>
 
 					</tbody>
 				</table>
