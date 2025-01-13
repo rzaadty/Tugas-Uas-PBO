@@ -76,7 +76,7 @@
 						<?php $no = 1; ?>
 						<?php foreach ($orders as $order): ?>
 						<!-- Tampilkan hanya jika reservasi = 'no' -->
-						<?php if ($order['reservasi'] == 'no' && $order['status_pesanan'] == 'Diproses'): ?>
+						<?php if ($order['reservasi'] == 'yes' && $order['status_pesanan'] == 'Diproses'): ?>
 						<tr>
 							<td><?= $no++; ?></td>
 							<td><?= $order['nama']; ?></td>

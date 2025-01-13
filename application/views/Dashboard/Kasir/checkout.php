@@ -113,7 +113,7 @@
         <option value="">Pilih Nomor Meja</option>
         <?php if (!empty($meja_items)) : ?>
             <?php foreach ($meja_items as $meja) : ?>
-                <option value="<?= $meja['id_meja']; ?>"><?= $meja['nomor_meja']; ?></option>
+                <option value="<?= $meja['id_meja']; ?>">No meja <?= $meja['nomor_meja']; ?> - Kapasitas <?= $meja['kapasitas']; ?></option>
             <?php endforeach; ?>
         <?php else : ?>
             <option value="">Tidak ada meja tersedia</option>

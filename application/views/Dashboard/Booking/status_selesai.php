@@ -54,11 +54,11 @@
 			<i class="bi bi-arrow-left"></i>
 		</button>
 	</div>
-
 	<div class="container mt-3">
 		<div class="card shadow-sm border border-dark border-3">
 			<div class="card-header bg-secondary">
 				<h3 class="mb-0 text-dark"><i class="bi bi-card-list"></i> Daftar Pesanan - Dapur</h3>
+				
 			</div>
 			<div class="card-body mt-3">
 				<table class="table table-striped" id="table1">
@@ -76,7 +76,7 @@
 						<?php $no = 1; ?>
 						<?php foreach ($orders as $order): ?>
 						<!-- Tampilkan hanya jika reservasi = 'no' -->
-						<?php if ($order['reservasi'] == 'no' && $order['status_pesanan'] == 'Diproses'): ?>
+						<?php if ($order['reservasi'] == 'yes' && $order['status_pesanan'] == 'Selesai'): ?>
 						<tr>
 							<td><?= $no++; ?></td>
 							<td><?= $order['nama']; ?></td>
@@ -100,6 +100,7 @@
 
 					</tbody>
 				</table>
+				
 			</div>
 		</div>
 	</div>

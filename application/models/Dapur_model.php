@@ -5,7 +5,7 @@ class Dapur_model extends CI_Model {
 
     // Fetch all orders with status "Menunggu" (Waiting)
     public function get_orders() {
-        $this->db->select('p.id_pesanan, p.nama, p.jenis_order, p.total_harga, p.status_pesanan,p.reservasi');
+        $this->db->select('*');
         $this->db->from('pesanan p');
         $this->db->order_by('p.tanggal', 'ASC');
         $query = $this->db->get();
