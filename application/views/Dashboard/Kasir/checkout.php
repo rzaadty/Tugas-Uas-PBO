@@ -154,32 +154,4 @@
 	</div>
 </div>
 
-<script>
-	// Function to format input as currency (Rp)
-	function formatRupiah(input) {
-		let value = input.value.replace(/[^\d]/g, ''); // Remove non-numeric characters
-		let formattedValue = '';
 
-		if (value) {
-			formattedValue = 'Rp ' + value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-		}
-
-		input.value = formattedValue;
-	}
-
-	// Function to update the "Kembalian" field based on the total and uang_bayar
-	function updateKembalian() {
-		let totalHarga = < ? = $total_harga; ? > ;
-		let uangBayar = document.getElementById('uang_bayar').value.replace(/[^\d]/g, ''); // Remove non-numeric characters
-		let kembalian = 0;
-
-		if (uangBayar) {
-			kembalian = parseInt(uangBayar) - totalHarga;
-			kembalian = kembalian >= 0 ? kembalian : 0;
-			document.getElementById('kembalian').value = 'Rp ' + kembalian.toLocaleString();
-		} else {
-			document.getElementById('kembalian').value = 'Rp 0';
-		}
-	}
-
-</script>
