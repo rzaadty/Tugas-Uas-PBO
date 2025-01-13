@@ -76,7 +76,7 @@
             <?php $no = 1; ?>
             <?php foreach ($orders as $order): ?>
             <!-- Tampilkan hanya jika status 'Baru' dan reservasi = 'no' -->
-            <?php if ($order['reservasi'] == 'no' && $order['status_pesanan'] == 'Baru'): ?>
+            <?php if ($order['reservasi'] == 'no' && $order['status_pesanan'] == 'Menunggu'): ?>
             <tr>
               <td><?= $no++; ?></td>
               <td><?= $order['nama']; ?></td>

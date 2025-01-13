@@ -61,4 +61,10 @@ class Kasir_model extends CI_Model {
         $query = $this->db->get('menu');
         return $query->result_array(); // Mengembalikan hasil query sebagai array
     }
+
+    public function update_status_meja($id_meja, $data) {
+        $this->db->where('id_meja', $id_meja);
+        return $this->db->update('meja', $data);
+    }
+    
 }

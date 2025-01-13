@@ -90,7 +90,7 @@
 								<a href="<?= site_url('Dapur/update_status/'.$order['id_pesanan'].'/Diproses'); ?>"
 									class="btn btn-warning btn-sm">Start Processing</a>
 								<?php elseif ($order['status_pesanan'] == 'Diproses'): ?>
-								<a href="<?= site_url('Dapur/update_status/'.$order['id_pesanan'].'/Selesai'); ?>"
+								<a href="<?= site_url('Dapur/update_status_selesai/'.$order['id_pesanan'].'/Selesai'); ?>"
 									class="btn btn-success btn-sm">Complete</a>
 								<?php endif; ?>
 							</td>

@@ -101,11 +101,6 @@
 						</tr>
 					</tfoot>
 				</table>
-				<?php if ($this->session->flashdata('error')): ?>
-				<div class="alert alert-danger">
-					<?= $this->session->flashdata('error'); ?>
-				</div>
-				<?php endif; ?>
 
 
 				<form action="<?= site_url('Customer_booking/buat_pesanan'); ?>" method="post"
@@ -118,19 +113,36 @@
 					<div id="hidden_data" style="display: none;">
 						<input type="hidden" name="id_pemesan_online" value="<?= $this->session->userdata('id'); ?>">
 					</div>
+
+					<div class="mb-3">
+						<label for="tanggal_pemesanan" class="form-label">Tanggal dan Jam Pemesanan</label>
+						<input type="datetime-local" name="tanggal_pemesanan" id="tanggal_pemesanan"
+							class="form-control">
+					</div>
+
+					<div class="mb-3">
+						<label for="nama" class="form-label">Atas Nama</label>
+						<input type="text" name="nama" id="nama" class="form-control"
+							value="<?= $this->session->userdata('nama'); ?>" readonly>
+					</div>
+
 					<div class="mb-3">
 						<label for="id_meja" class="form-label">Nomor Meja</label>
 						<select name="id_meja" id="id_meja" class="form-select" required>
 							<option value="">Pilih Nomor Meja</option>
 							<?php if (!empty($meja_items)) : ?>
 							<?php foreach ($meja_items as $meja) : ?>
-							<option value="<?= $meja['id_meja']; ?>"><?= $meja['nomor_meja']; ?></option>
+							<?php if ($meja['status'] === 'tersedia') : ?>
+							<option value="<?= $meja['id_meja']; ?>">No Meja <?= $meja['nomor_meja']; ?> - Kapasitas
+								<?= $meja['kapasitas']; ?></option>
+							<?php endif; ?>
 							<?php endforeach; ?>
 							<?php else : ?>
 							<option value="">Tidak ada meja tersedia</option>
 							<?php endif; ?>
 						</select>
 					</div>
+
 					<div class="mb-3">
 						<label for="jenis_order" class="form-label">Jenis Order</label>
 						<select name="jenis_order" id="jenis_order" class="form-select" readonly>

@@ -73,4 +73,17 @@ class Customer_booking_model extends CI_Model {
 		$query = $this->db->get('pesanan'); // Menjalankan query untuk mendapatkan pesanan
 		return $query->row_array(); // Mengembalikan satu baris data pesanan
 	}
+
+	public function update_status_meja($id_meja, $status, $waktu_dipesan = null) {
+		$data = array(
+			'status' => $status,
+			'waktu_dipesan' => $waktu_dipesan,
+		);
+		$this->db->where('id_meja', $id_meja);
+		return $this->db->update('meja', $data);
+	}
+	
+
+	
+	
 }

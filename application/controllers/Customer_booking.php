@@ -63,14 +63,14 @@ class Customer_booking extends CI_Controller {
             $this->form_validation->set_rules('id_meja', 'Nomor Meja', 'required');
             $this->form_validation->set_rules('uang_bayar', 'Uang Dibayarkan', 'required|numeric');
             $this->form_validation->set_rules('bukti_pembayaran', 'Bukti Pembayaran', 'callback_file_check');
-
+    
             if ($this->form_validation->run() == FALSE) {
                 $this->load->view('customer_booking_view'); // Menampilkan halaman form jika validasi gagal
             } else {
                 $uang_bayar = $this->input->post('uang_bayar');
                 $total_harga = $this->cart->total();
                 $kembalian = $uang_bayar - $total_harga;
-
+    
                 // Menyiapkan data pesanan
                 $data = array(
                     'id_pemesan_online' => $this->session->userdata('id'),
@@ -85,14 +85,14 @@ class Customer_booking extends CI_Controller {
                     'status_pesanan' => 'Menunggu',
                     'reservasi' => 'yes',
                 );
-
+    
                 // Upload bukti pembayaran jika ada
                 if ($_FILES['bukti_pembayaran']['name']) {
                     $config['upload_path'] = FCPATH . 'path/gambar_bukti_transfer/';
                     $config['allowed_types'] = 'jpg|jpeg|png|gif|pdf';
                     $config['max_size'] = 2048;
                     $this->upload->initialize($config);
-
+    
                     if ($this->upload->do_upload('bukti_pembayaran')) {
                         $data['bukti_pembayaran'] = $this->upload->data('file_name');
                     } else {
@@ -100,11 +100,16 @@ class Customer_booking extends CI_Controller {
                         redirect('Customer_booking/buat_pesanan');
                     }
                 }
-
+    
                 // Menyimpan data pesanan ke database
                 $insert = $this->Customer_booking_model->tambah_pesanan($data);
-
+    
                 if ($insert) {
+                    // Update status meja menjadi "terpesan" dan tambahkan waktu_dipesan
+                    $id_meja = $this->input->post('id_meja');
+                    $waktu_dipesan = $this->input->post('tanggal_pemesanan'); // Waktu sekarang
+                    $this->Customer_booking_model->update_status_meja($id_meja, 'terpesan', $waktu_dipesan);
+                
                     // Menyimpan detail pesanan dan mengurangi stok barang
                     foreach ($this->cart->contents() as $item) {
                         $data_detail = array(
@@ -116,9 +121,9 @@ class Customer_booking extends CI_Controller {
                         $this->Customer_booking_model->tambah_detail_pesanan($data_detail);
                         $this->Customer_booking_model->kurangi_stok($item['id'], $item['qty']);
                     }
-
+                
                     $this->cart->destroy(); // Menghapus cart setelah pemesanan
-
+                
                     $this->session->set_flashdata('success', 'Pesanan berhasil diproses!');
                     redirect('Customer_booking/konfirmasi_pesanan/' . $insert); // Redirect ke halaman konfirmasi
                 } else {
@@ -130,6 +135,7 @@ class Customer_booking extends CI_Controller {
             $this->load->view('customer_booking_view');
         }
     }
+    
 
     // Validasi file bukti pembayaran
     public function file_check($str) {

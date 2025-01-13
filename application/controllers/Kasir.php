@@ -81,12 +81,13 @@ class Kasir extends CI_Controller {
 			'kembalian'=> $kembalian,
 			'tanggal'=> date('Y-m-d H:i:s'),
 			'status_pesanan'=> $status_pesanan,
-			'reservasi' => 'no');
+			'reservasi'=> 'no'
+		);
 
-		// Menambahkan pesanan
+		// Tambahkan pesanan
 		$id_pesanan=$this->Kasir_model->tambah_pesanan($data_pesanan);
 
-		// Menambahkan detail pesanan dari cart
+		// Tambahkan detail pesanan dari cart
 		foreach ($this->cart->contents() as $item) {
 			// Data detail pesanan
 			$data_detail=array('id_pesanan'=> $id_pesanan,
@@ -95,9 +96,14 @@ class Kasir extends CI_Controller {
 				'harga_jual'=> $item['price']);
 			$this->Kasir_model->tambah_detail_pesanan($data_detail);
 
-			// Mengurangi stok barang setelah pesanan dibuat
+			// Kurangi stok barang
 			$this->Kasir_model->kurangi_stok($item['id'], $item['qty']);
 		}
+
+		// Ubah status meja menjadi "terpesan"
+		$data_meja=array('status'=> 'terpesan',
+			'waktu_dipesan'=> date('Y-m-d H:i:s'));
+		$this->Kasir_model->update_status_meja($id_meja, $data_meja);
 
 		// Kosongkan cart setelah pesanan dibuat
 		$this->cart->destroy();
