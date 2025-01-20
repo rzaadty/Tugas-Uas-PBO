@@ -123,7 +123,7 @@
 					</a>
 				</div>
 				<div class="col-6 col-md-3 mb-3 px-2">
-					<a href="<?= site_url('Laporan')?>" class="card h-100 text-center border border-dark border-4 shadow">
+					<a href="<?= site_url('Auth/akun')?>" class="card h-100 text-center border border-dark border-4 shadow">
 						<div class="card-body">
 							<i class="bi bi-bar-chart" style="font-size: 40px; color: #000000;"></i>
 							<h5 class="card-title mt-2 text-dark">Laporan</h5>
@@ -131,7 +131,7 @@
 					</a>
 				</div>
 				<div class="col-6 col-md-3 mb-3 px-2">
-					<a href="#" class="card h-100 text-center border border-dark border-4 shadow">
+					<a href="<?= site_url('Dashboard_akun')?>" class="card h-100 text-center border border-dark border-4 shadow">
 						<div class="card-body">
 							<i class="bi bi-gear" style="font-size: 40px; color: #000000;"></i>
 							<h5 class="card-title mt-2 text-dark">Akun</h5>

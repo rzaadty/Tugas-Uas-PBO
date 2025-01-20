@@ -31,7 +31,6 @@
 
 </style>
 
-
 <div class="background-container">
 <div class="d-flex justify-content-between bg-secondary align-items-center px-3 py-2">
         <h4 class="text-uppercase text-dark">
@@ -45,7 +44,7 @@
     </div>
 	<div class="container mt-4">
 		<div class="card shadow-sm border border-dark border-3">
-			<div class="card-header bg-secondary text-white ">
+			<div class="card-header bg-secondary text-white">
             <h3 class="mb-0 text-dark"><i class="bi bi-bar-chart"></i> Daftar Laporan</h3>
 			</div>
 			<div class="card-body">
@@ -69,7 +68,17 @@
 							</tr>
 						</thead>
 						<tbody>
-							<?php $no = 1; foreach ($laporan as $row): ?>
+							<?php 
+							$no = 1; 
+							$total_harga = 0; 
+							$total_uang_bayar = 0; 
+							$total_kembalian = 0;
+
+							foreach ($laporan as $row): 
+								$total_harga += $row['total_harga'];
+								$total_uang_bayar += $row['uang_bayar'];
+								$total_kembalian += $row['kembalian'];
+							?>
 							<tr>
 								<td class="text-center"><?= $no++; ?></td>
 								<td class="text-center"><?= $row['id_meja']; ?></td>
@@ -84,38 +93,38 @@
 								<td class="text-center"><?= htmlspecialchars($row['tanggal']); ?></td>
 								<td class="text-center">
 									<?php if ($row['status_pesanan'] == 'Menunggu'): ?>
-									<span
-										class="badge bg-primary" value=" <?= htmlspecialchars($row['status_pesanan']); ?>"><i class="bi bi-arrow-down"></i></span>
+									<span class="badge bg-primary" value="<?= htmlspecialchars($row['status_pesanan']); ?>"><i class="bi bi-arrow-down"></i></span>
 									<?php elseif ($row['status_pesanan'] == 'Diproses'): ?>
-									<span
-										class="badge bg-warning text-dark" value="<?= htmlspecialchars($row['status_pesanan']); ?>"><i class="bi bi-hourglass-split"></i></span>
+									<span class="badge bg-warning text-dark" value="<?= htmlspecialchars($row['status_pesanan']); ?>"><i class="bi bi-hourglass-split"></i></span>
 									<?php elseif ($row['status_pesanan'] == 'Selesai'): ?>
-									<span
-										class="badge bg-success" value="<?= htmlspecialchars($row['status_pesanan']); ?>"><i class="bi bi-file-check"></i></span>
+									<span class="badge bg-success" value="<?= htmlspecialchars($row['status_pesanan']); ?>"><i class="bi bi-file-check"></i></span>
 									<?php else: ?>
-									<span
-										class="badge bg-secondary"><?= htmlspecialchars($row['status_pesanan']); ?></span>
+									<span class="badge bg-secondary"><?= htmlspecialchars($row['status_pesanan']); ?></span>
 									<?php endif; ?>
 								</td>
-
 								<td class="text-center">
 									<?php if (!empty($row['bukti_pembayaran'])): ?>
-									<img src="<?= base_url('path/gambar_bukti_transfer/' . $row['bukti_pembayaran']); ?>"
-										alt="Bukti" width="50">
+									<img src="<?= base_url('path/gambar_bukti_transfer/' . $row['bukti_pembayaran']); ?>" alt="Bukti" width="50">
 									<?php else: ?>
 									<span class="text-muted">Order Offline</span>
 									<?php endif; ?>
 								</td>
-
 								<td class="text-center"><?= $row['reservasi'] == 'yes' ? 'Ya' : 'Tidak'; ?></td>
 								<td class="text-center">
-									<a href="<?= site_url('Laporan/delete/' . $row['id_pesanan']); ?>"
-										class="btn btn-danger btn-sm" onclick="return confirm('Hapus laporan ini?')">
+									<a href="<?= site_url('Laporan/delete/' . $row['id_pesanan']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Hapus laporan ini?')">
                                         <i class="bi bi-trash"></i>
 									</a>
 								</td>
 							</tr>
 							<?php endforeach; ?>
+							<!-- Baris Total Keseluruhan -->
+							<tr class="table-warning">
+								<td colspan="5" class="text-center fw-bold">Total Keseluruhan</td>
+								<td class="text-end fw-bold">Rp<?= number_format($total_harga, 0, ',', '.'); ?></td>
+								<td class="text-end fw-bold">Rp<?= number_format($total_uang_bayar, 0, ',', '.'); ?></td>
+								<td class="text-end fw-bold">Rp<?= number_format($total_kembalian, 0, ',', '.'); ?></td>
+								<td colspan="5"></td>
+							</tr>
 						</tbody>
 					</table>
 				</div>

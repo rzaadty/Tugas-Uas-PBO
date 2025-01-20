@@ -25,4 +25,22 @@ class Auth_model extends CI_Model {
         // Insert data ke tabel login
         return $this->db->insert('login', $data);
     }
+
+	public function get_all_users() {
+        return $this->db->get('login')->result();
+    }
+
+    public function get_user_by_id($id) {
+        return $this->db->get_where('login', ['id_login' => $id])->row();
+    }
+
+    public function update_user($id, $data) {
+        $this->db->where('id_login', $id);
+        return $this->db->update('login', $data);
+    }
+
+    public function delete_user($id) {
+        $this->db->where('id_login', $id);
+        return $this->db->delete('login');
+    }
 }
