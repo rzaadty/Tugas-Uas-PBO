@@ -65,13 +65,13 @@
         <!-- Card Status Baru -->
         <div class="col-md-4 mb-4">
           <a href="#" class="text-decoration-none">
-            <div class="card shadow-sm border-0">
+            <div class="card shadow-sm border border-dark border-3">
               <div class="card-header bg-primary text-white">
                 <h5 class="mb-0 text-white">Status: Baru</h5>
               </div>
               <div class="card-body">
                 <p>Pesanan baru yang belum diproses.</p>
-                <a href="<?= site_url('Dapur/status_baru')?>" class="btn btn-primary btn-sm">Lihat Detail</a>
+                <a href="<?= site_url('Dapur/status_baru')?>" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i> Lihat Detail</a>
               </div>
             </div>
           </a>
@@ -79,13 +79,13 @@
         <!-- Card Status Diproses -->
         <div class="col-md-4 mb-4">
           <a href="#" class="text-decoration-none">
-            <div class="card shadow-sm border-0">
+            <div class="card shadow-sm border border-dark border-3">
               <div class="card-header bg-warning text-dark">
                 <h5 class="mb-0 text-white">Status: Diproses</h5>
               </div>
               <div class="card-body">
                 <p>Pesanan sedang diproses oleh tim.</p>
-                <a href="<?= site_url('Dapur/status_diproses')?>" class="btn btn-warning btn-sm">Lihat Detail</a>
+                <a href="<?= site_url('Dapur/status_diproses')?>" class="btn btn-warning btn-sm"><i class="bi bi-eye"></i> Lihat Detail</a>
               </div>
             </div>
           </a>
@@ -93,13 +93,13 @@
         <!-- Card Status Selesai -->
         <div class="col-md-4">
           <a href="#" class="text-decoration-none">
-            <div class="card shadow-sm border-0">
+            <div class="card shadow-sm border border-dark border-3">
               <div class="card-header bg-success text-white">
                 <h5 class="mb-0 text-white">Status: Selesai</h5>
               </div>
               <div class="card-body">
                 <p>Pesanan telah selesai diproses</p>
-                <a href="<?= site_url('Dapur/status_selesai')?>" class="btn btn-success btn-sm">Lihat Detail</a>
+                <a href="<?= site_url('Dapur/status_selesai')?>" class="btn btn-success btn-sm"><i class="bi bi-eye"></i> Lihat Detail</a>
               </div>
             </div>
           </a>

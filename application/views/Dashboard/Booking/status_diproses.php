@@ -50,7 +50,7 @@
 			Dapur
 		</h4>
 
-		<button onclick="window.location='<?= site_url('Dapur') ?>'" class="btn btn-dark">
+		<button onclick="window.location='<?= site_url('Booking') ?>'" class="btn btn-dark">
 			<i class="bi bi-arrow-left"></i>
 		</button>
 	</div>
@@ -58,7 +58,7 @@
 	<div class="container mt-3">
 		<div class="card shadow-sm border border-dark border-3">
 			<div class="card-header bg-secondary">
-				<h3 class="mb-0 text-dark"><i class="bi bi-card-list"></i> Daftar Pesanan - Dapur</h3>
+				<h3 class="mb-0 text-dark"><i class="bi bi-card-list"></i> Daftar Pesanan - Booking</h3>
 			</div>
 			<div class="card-body mt-3">
 				<table class="table table-striped" id="table1">

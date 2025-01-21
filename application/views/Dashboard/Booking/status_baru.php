@@ -50,7 +50,7 @@
       Dapur
     </h4>
 
-    <button onclick="window.location='<?= site_url('Dapur') ?>'" class="btn btn-dark">
+    <button onclick="window.location='<?= site_url('Booking') ?>'" class="btn btn-dark">
       <i class="bi bi-arrow-left"></i>
     </button>
   </div>
@@ -58,7 +58,7 @@
   <div class="container mt-3">
     <div class="card shadow-sm border border-dark border-3">
       <div class="card-header bg-secondary">
-        <h3 class="mb-0 text-dark"><i class="bi bi-card-list"></i> Daftar Pesanan - Dapur</h3>
+        <h3 class="mb-0 text-dark"><i class="bi bi-card-list"></i> Daftar Pesanan - Booking</h3>
       </div>
       <div class="card-body mt-3">
         <table class="table table-striped" id="table1">
@@ -84,13 +84,13 @@
               <td>Rp <?= number_format($order['total_harga'], 0, ',', '.'); ?></td>
               <td><?= $order['status_pesanan']; ?></td>
               <td>
-                <a href="<?= site_url('Dapur/view_order/'.$order['id_pesanan']); ?>"
+                <a href="<?= site_url('Booking/view_order/'.$order['id_pesanan']); ?>"
                    class="btn btn-info btn-sm">View</a>
                 <?php if ($order['status_pesanan'] == 'Menunggu'): ?>
-                <a href="<?= site_url('Dapur/update_status/'.$order['id_pesanan'].'/Diproses'); ?>"
+                <a href="<?= site_url('Booking/update_status/'.$order['id_pesanan'].'/Diproses'); ?>"
                    class="btn btn-warning btn-sm">Start Processing</a>
                 <?php elseif ($order['status_pesanan'] == 'Diproses'): ?>
-                <a href="<?= site_url('Dapur/update_status/'.$order['id_pesanan'].'/Selesai'); ?>"
+                <a href="<?= site_url('Booking/update_status/'.$order['id_pesanan'].'/Selesai'); ?>"
                    class="btn btn-success btn-sm">Complete</a>
                 <?php endif; ?>
               </td>

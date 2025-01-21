@@ -85,10 +85,10 @@
 								<td><?= $user->status; ?></td>
 								<td>
 									<a href="<?= site_url('Dashboard_akun/edit/'.$user->id_login) ?>"
-										class="btn btn-sm btn-warning">Edit</a>
+										class="btn btn-sm btn-warning"><i class="bi bi-pencil-square"></i></a>
 									<a href="<?= site_url('Dashboard_akun/delete/'.$user->id_login) ?>"
 										class="btn btn-sm btn-danger"
-										onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+										onclick="return confirm('Yakin ingin menghapus?')"><i class="bi bi-trash"></i></a>
 								</td>
 							</tr>
 							<?php endforeach; ?>

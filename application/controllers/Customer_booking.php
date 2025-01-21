@@ -65,7 +65,12 @@ class Customer_booking extends CI_Controller {
             $this->form_validation->set_rules('bukti_pembayaran', 'Bukti Pembayaran', 'callback_file_check');
     
             if ($this->form_validation->run() == FALSE) {
-                $this->load->view('customer_booking_view'); // Menampilkan halaman form jika validasi gagal
+                $data['cart_items'] = $this->cart->contents(); // Mengambil data isi cart
+                $data['total_harga'] = $this->cart->total(); // Menghitung total harga
+                $data['meja_items'] = $this->Customer_booking_model->get_all_meja(); // Mengambil data meja
+                $this->load->view('Index/header_customer');
+                $this->load->view('Customer/Booking/checkout', $data);
+                $this->load->view('Index/footer_customer');
             } else {
                 $uang_bayar = $this->input->post('uang_bayar');
                 $total_harga = $this->cart->total();
@@ -132,7 +137,12 @@ class Customer_booking extends CI_Controller {
                 }
             }
         } else {
-            $this->load->view('customer_booking_view');
+         $data['cart_items'] = $this->cart->contents(); // Mengambil data isi cart
+        $data['total_harga'] = $this->cart->total(); // Menghitung total harga
+        $data['meja_items'] = $this->Customer_booking_model->get_all_meja(); // Mengambil data meja
+        $this->load->view('Index/header_customer');
+        $this->load->view('Customer/Booking/checkout', $data);
+        $this->load->view('Index/footer_customer');
         }
     }
     
