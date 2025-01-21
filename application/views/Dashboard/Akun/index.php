@@ -85,9 +85,9 @@
 								<td><?= $user->status; ?></td>
 								<td>
 									<a href="<?= site_url('Dashboard_akun/edit/'.$user->id_login) ?>"
-										class="btn btn-sm btn-warning"><i class="bi bi-pencil-square"></i></a>
+										class="btn btn-sm btn-warning mb-2"><i class="bi bi-pencil-square"></i></a>
 									<a href="<?= site_url('Dashboard_akun/delete/'.$user->id_login) ?>"
-										class="btn btn-sm btn-danger"
+										class="btn btn-sm btn-danger mb-2"
 										onclick="return confirm('Yakin ingin menghapus?')"><i class="bi bi-trash"></i></a>
 								</td>
 							</tr>

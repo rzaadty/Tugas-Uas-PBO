@@ -46,7 +46,7 @@
 <div class="background-container">
   <div class="d-flex justify-content-between bg-secondary align-items-center px-3 py-2">
     <h4 class="text-uppercase text-dark">
-      <i class="bi bi-cash-coin" style="font-size: 30px;"></i>
+      <i class="bi bi-basket" style="font-size: 30px;"></i>
       Dapur
     </h4>
 
