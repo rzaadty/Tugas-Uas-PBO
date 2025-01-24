@@ -47,7 +47,7 @@
 	<div class="d-flex justify-content-between bg-secondary align-items-center px-3 py-2">
 		<h4 class="text-uppercase text-dark">
 			<i class="bi bi-basket" style="font-size: 30px;"></i>
-			Dapur
+			Booking Online
 		</h4>
 
 		<button onclick="window.location='<?= site_url('Booking') ?>'" class="btn btn-dark">

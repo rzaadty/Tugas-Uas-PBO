@@ -57,7 +57,7 @@
                                 <td><?= $item['qty']; ?></td>
                                 <td>Rp <?= number_format($item['subtotal'], 0, ',', '.'); ?></td>
                                 <td>
-                                    <a href="<?= site_url('Customer_booking/hapus_item_cart/' . $item['rowid']); ?>" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Hapus</a>
+                                    <a href="<?= site_url('Customer_booking/hapus_item_cart/' . $item['rowid']); ?>" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -76,8 +76,8 @@
                     </tfoot>
                 </table>
 
-                <a href="<?= site_url('Customer_booking'); ?>" class="btn btn-primary"><i class="bi bi-bag-plus"></i> Tambah Pesanan</a>
-                <a href="<?= site_url('Customer_booking/checkout'); ?>" class="btn btn-success"><i class="bi bi-cart4"></i> Checkout</a>
+                <a href="<?= site_url('Customer_booking'); ?>" class="btn btn-primary mb-3"><i class="bi bi-bag-plus"></i> Tambah Pesanan</a>
+                <a href="<?= site_url('Customer_booking/checkout'); ?>" class="btn btn-success mb-3"><i class="bi bi-cart4"></i> Checkout</a>
             </div>
         </div>
     </div>
